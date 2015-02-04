@@ -7,6 +7,7 @@ module Feedjira
       include SAXMachine
       include FeedEntryUtilities
 
+      element :"dc:creator", :as => :author
       element :author
       element :guid, :as => :entry_id
       element :title
