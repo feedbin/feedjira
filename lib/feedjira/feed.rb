@@ -146,6 +146,7 @@ module Feedjira
     # * :proxy_port          - proxy port
     # * :max_redirects       - max number of redirections
     # * :timeout             - timeout
+    # * :connect_timeout     - initial connection timeout
     # * :ssl_verify_host     - boolean
     # * :ssl_verify_peer     - boolean
     # * :ssl_version         - the ssl version to use, see OpenSSL::SSL::SSLContext::METHODS for options
@@ -162,6 +163,7 @@ module Feedjira
       curl.proxy_port = options[:proxy_port] if options.has_key?(:proxy_port)
       curl.max_redirects = options[:max_redirects] if options[:max_redirects]
       curl.timeout = options[:timeout] if options[:timeout]
+      curl.connect_timeout = options[:connect_timeout] if options[:connect_timeout]
       curl.ssl_verify_host = options[:ssl_verify_host] if options.has_key?(:ssl_verify_host)
       curl.ssl_verify_peer = options[:ssl_verify_peer] if options.has_key?(:ssl_verify_peer)
       curl.ssl_version = options[:ssl_version] if options.has_key?(:ssl_version)
