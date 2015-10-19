@@ -24,13 +24,11 @@ module Feedjira
       elements :link, :as => :links, :value => :href
 
       element :"yt:videoId", :as => :youtube_video_id
-      element :"media:content", :as => :media, :value => :url
       element :"media:description", :as => :media_description
-      element :"media:thumbnail", :as => :media_thumbnail, :value => :url
-      element :"media:thumbnail", :as => :media_thumbnail_width, :value => :width do |width|
+      element :"media:content", :as => :media_width, :value => :width do |width|
         width.to_i
       end
-      element :"media:thumbnail", :as => :media_thumbnail_height, :value => :height do |height|
+      element :"media:content", :as => :media_height, :value => :height do |height|
         height.to_i
       end
 
