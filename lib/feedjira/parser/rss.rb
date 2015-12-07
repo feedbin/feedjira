@@ -11,6 +11,7 @@ module Feedjira
       element :link, :as => :url
       elements :item, :as => :entries, :class => RSSEntry
       elements :"atom:link", :as => :hubs, :value => :href, :with => {:rel => "hub"}
+      element :"atom:link", :as => :self_url, :value => :href, :with => {:rel => "self"}
 
       attr_accessor :feed_url
 

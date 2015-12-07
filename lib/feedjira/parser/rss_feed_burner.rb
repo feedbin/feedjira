@@ -8,6 +8,7 @@ module Feedjira
       element :title
       element :description
       element :link, :as => :url
+      element :"atom10:link", :as => :self_url, :value => :href, :with => {:rel => "self"}
       elements :"atom10:link", :as => :hubs, :value => :href, :with => {:rel => "hub"}
       elements :item, :as => :entries, :class => RSSFeedBurnerEntry
 

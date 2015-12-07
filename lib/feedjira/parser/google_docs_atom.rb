@@ -9,6 +9,7 @@ module Feedjira
       element :subtitle, :as => :description
       element :link, :as => :url, :value => :href, :with => {:type => "text/html"}
       element :link, :as => :feed_url, :value => :href, :with => {:type => "application/atom+xml"}
+      element :link, :as => :self_url, :value => :href, :with => {:rel => "self"}
       elements :link, :as => :links, :value => :href
       elements :entry, :as => :entries, :class => GoogleDocsAtomEntry
 

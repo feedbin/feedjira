@@ -16,6 +16,7 @@ module Feedjira
       element :managingEditor
       element :title
       element :link, :as => :url
+      element :"atom:link", :as => :self_url, :value => :href, :with => {:rel => "self"}
 
       # If author is not present use managingEditor on the channel
       element :"itunes:author", :as => :itunes_author
