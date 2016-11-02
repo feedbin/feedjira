@@ -28,8 +28,8 @@ module Feedjira
       element :issued, :as => :published
       elements :category, :as => :categories
 
-      element :guid, :as => :entry_id
       element :"dc:identifier", :as => :entry_id
+      element :guid, :as => :entry_id
     end
 
   end
