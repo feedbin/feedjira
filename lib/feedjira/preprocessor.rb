@@ -1,3 +1,5 @@
+# rubocop:disable Style/Documentation
+# rubocop:disable Style/DocumentationMethod
 module Feedjira
   class Preprocessor
     def initialize(xml)
@@ -18,11 +20,11 @@ module Feedjira
     end
 
     def content_nodes
-      doc.search 'entry > content[type="xhtml"], entry > summary[type="xhtml"], entry > title[type="xhtml"]'
+      doc.search 'entry > content[type="xhtml"], entry > summary[type="xhtml"], entry > title[type="xhtml"]' # rubocop:disable Metrics/LineLength
     end
 
     def raw_html(node)
-      CGI.unescape_html node.search('./div').inner_html
+      node.search("./div").inner_html
     end
 
     def doc

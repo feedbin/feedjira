@@ -7,20 +7,36 @@
 <link>http://www.example.com/podcasts/everything/index.html</link>
 <language>en-us</language>
 <copyright>&#x2117; &amp; &#xA9; 2005 John Doe &amp; Family</copyright>
+<lastBuildDate>Sat, 07 Sep 2002 09:42:31 GMT</lastBuildDate>
+<ttl>60</ttl>
 <itunes:subtitle>A show about everything</itunes:subtitle>
 <itunes:new-feed-url>http://example.com/new.xml</itunes:new-feed-url>
 <itunes:author>John Doe</itunes:author>
 <itunes:summary>All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Music Store</itunes:summary>
+<description>All About Everything is a show about everything.</description>
 <description>All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Music Store</description>
+<itunes:complete>yes</itunes:complete>
 <itunes:owner>
 <itunes:name>John Doe</itunes:name>
 <itunes:email>john.doe@example.com</itunes:email>
 </itunes:owner>
 <itunes:image href="http://example.com/podcasts/everything/AllAboutEverything.jpg" />
+<image>
+  <url>http://example.com/podcasts/everything/AllAboutEverything.jpg</url>
+  <title>All About Everything</title>
+  <link>http://www.example.com/podcasts/everything/index.html</link>
+  <width>88</width>
+  <height>31</height>
+  <description>All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Music Store</description>
+</image>
 <itunes:category text="Technology">
-<itunes:category text="Gadgets"/>
+  <itunes:category text="Gadgets"/>
+</itunes:category>
 <itunes:category text="TV &amp; Film"/>
- 
+<itunes:category text="Arts">
+  <itunes:category text="Design"/>
+  <itunes:category text="Food"/>
+</itunes:category>
 <item>
 <title>Shake Shake Shake Your Spices</title>
 <itunes:author>John Doe</itunes:author>

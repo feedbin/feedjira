@@ -1,3 +1,3 @@
 module Feedjira
-  VERSION = '1.6.0'
+  VERSION = "2.1.2".freeze
 end

@@ -1,18 +1,37 @@
 language: ruby
 
-bundler_args: --without tools
-
-branches:
-  only:
-    - master
+cache: bundler
 
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
-  - rbx-2
+  - 2.1
+  - 2.2
+  - 2.3
+  - jruby-9
+  - ruby-head
 
 env:
-  matrix:
-    - HANDLER="nokogiri"
-    - HANDLER="ox"
+  - HANDLER=nokogiri
+  - HANDLER=ox
+  - HANDLER=oga
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - rvm: jruby-9
+    - rvm: ruby-head
+  exclude:
+    - rvm: jruby-9
+      env: HANDLER=ox
+
+before_install:
+  - gem update bundler
+
+script:
+  - bundle exec rake
+  - bundle exec danger
+
+notifications:
+  email: false
+  webhooks:
+    urls:
+      secure: XjoUz2rPXFHnitw//jN4qA92jq7bH19iOI/5KnuptLzz5HrWq1VAXxAr/Fh0KxYZT29G/9i5szaHX1QacfO7he4xa2tZKudRL70Dw3KRLgqLi70G6kFuZYlh+MgMHZy6KwZ/4/250wO31fpv24PCb2M56iTsev2g2uporeobO0Q=

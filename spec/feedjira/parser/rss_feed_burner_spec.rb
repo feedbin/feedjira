@@ -1,31 +1,31 @@
-require File.join(File.dirname(__FILE__), %w[.. .. spec_helper])
+require "spec_helper"
 
-describe Feedjira::Parser::RSSFeedBurner do
+module Feedjira::Parser
   describe "#will_parse?" do
     it "should return true for a feedburner rss feed" do
-      expect(Feedjira::Parser::RSSFeedBurner).to be_able_to_parse(sample_rss_feed_burner_feed)
+      expect(RSSFeedBurner).to be_able_to_parse sample_rss_feed_burner_feed
     end
 
     it "should return false for a regular RSS feed" do
-       expect(Feedjira::Parser::RSSFeedBurner).to_not be_able_to_parse(sample_rss_feed)
-     end
+      expect(RSSFeedBurner).to_not be_able_to_parse sample_rss_feed
+    end
 
     it "should return false for a feedburner atom feed" do
-      expect(Feedjira::Parser::RSSFeedBurner).to_not be_able_to_parse(sample_feedburner_atom_feed)
+      expect(RSSFeedBurner).to_not be_able_to_parse sample_feedburner_atom_feed
     end
 
     it "should return false for an rdf feed" do
-      expect(Feedjira::Parser::RSSFeedBurner).to_not be_able_to_parse(sample_rdf_feed)
+      expect(RSSFeedBurner).to_not be_able_to_parse sample_rdf_feed
     end
 
     it "should return false for a regular atom feed" do
-      expect(Feedjira::Parser::RSSFeedBurner).to_not be_able_to_parse(sample_atom_feed)
+      expect(RSSFeedBurner).to_not be_able_to_parse sample_atom_feed
     end
   end
 
   describe "parsing" do
     before(:each) do
-      @feed = Feedjira::Parser::RSSFeedBurner.parse(sample_rss_feed_burner_feed)
+      @feed = RSSFeedBurner.parse(sample_rss_feed_burner_feed)
     end
 
     it "should parse the title" do
@@ -33,11 +33,16 @@ describe Feedjira::Parser::RSSFeedBurner do
     end
 
     it "should parse the description" do
-      expect(@feed.description).to eq "TechCrunch is a group-edited blog that profiles the companies, products and events defining and transforming the new web."
+      description = "TechCrunch is a group-edited blog that profiles the companies, products and events defining and transforming the new web." # rubocop:disable Metrics/LineLength
+      expect(@feed.description).to eq description
     end
 
     it "should parse the url" do
       expect(@feed.url).to eq "http://techcrunch.com"
+    end
+
+    it "should parse the last build date" do
+      expect(@feed.last_built).to eq "Wed, 02 Nov 2011 17:29:59 +0000"
     end
 
     it "should parse the hub urls" do

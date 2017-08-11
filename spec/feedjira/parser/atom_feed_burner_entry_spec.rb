@@ -1,19 +1,23 @@
-require File.join(File.dirname(__FILE__), %w[.. .. spec_helper])
+require "spec_helper"
 
 describe Feedjira::Parser::AtomFeedBurnerEntry do
   before(:each) do
-    # I don't really like doing it this way because these unit test should only rely on AtomEntry,
-    # but this is actually how it should work. You would never just pass entry xml straight to the AtomEnry
-    @entry = Feedjira::Parser::AtomFeedBurner.parse(sample_feedburner_atom_feed).entries.first
+    Feedjira::Parser::AtomFeedBurner.preprocess_xml = false
+    # I don't really like doing it this way because these unit test should only
+    # rely on AtomEntry, but this is actually how it should work. You would
+    # never just pass entry xml straight to the AtomEnry
+    feed = Feedjira::Parser::AtomFeedBurner.parse sample_feedburner_atom_feed
+    @entry = feed.entries.first
   end
 
   it "should parse the title" do
     expect(@entry.title).to eq "Making a Ruby C library even faster"
   end
 
-  it "should be able to fetch a url via the 'alternate' rel if no origLink exists" do
-    entry = Feedjira::Parser::AtomFeedBurner.parse(File.read("#{File.dirname(__FILE__)}/../../sample_feeds/PaulDixExplainsNothingAlternate.xml")).entries.first
-    expect(entry.url).to eq 'http://feeds.feedburner.com/~r/PaulDixExplainsNothing/~3/519925023/making-a-ruby-c-library-even-faster.html'
+  it "should be able to fetch a url via the 'alternate' rel if no origLink exists" do # rubocop:disable Metrics/LineLength
+    xml = File.read("#{File.dirname(__FILE__)}/../../sample_feeds/PaulDixExplainsNothingAlternate.xml") # rubocop:disable Metrics/LineLength
+    entry = Feedjira::Parser::AtomFeedBurner.parse(xml).entries.first
+    expect(entry.url).to eq "http://feeds.feedburner.com/~r/PaulDixExplainsNothing/~3/519925023/making-a-ruby-c-library-even-faster.html"
   end
 
   it "should parse the url" do
@@ -21,8 +25,9 @@ describe Feedjira::Parser::AtomFeedBurnerEntry do
   end
 
   it "should parse the url when there is no alternate" do
-    entry = Feedjira::Parser::AtomFeedBurner.parse(File.read("#{File.dirname(__FILE__)}/../../sample_feeds/FeedBurnerUrlNoAlternate.xml")).entries.first
-    expect(entry.url).to eq 'http://example.com/QQQQ.html'
+    xml = File.read("#{File.dirname(__FILE__)}/../../sample_feeds/FeedBurnerUrlNoAlternate.xml") # rubocop:disable Metrics/LineLength
+    entry = Feedjira::Parser::AtomFeedBurner.parse(xml).entries.first
+    expect(entry.url).to eq "http://example.com/QQQQ.html"
   end
 
   it "should parse the author" do
@@ -34,14 +39,16 @@ describe Feedjira::Parser::AtomFeedBurnerEntry do
   end
 
   it "should provide a summary" do
-    expect(@entry.summary).to eq "Last week I released the first version of a SAX based XML parsing library called SAX-Machine. It uses Nokogiri, which uses libxml, so it's pretty fast. However, I felt that it could be even faster. The only question was how..."
+    summary = "Last week I released the first version of a SAX based XML parsing library called SAX-Machine. It uses Nokogiri, which uses libxml, so it's pretty fast. However, I felt that it could be even faster. The only question was how..." # rubocop:disable Metrics/LineLength
+    expect(@entry.summary).to eq summary
   end
 
   it "should parse the published date" do
-    expect(@entry.published).to eq Time.parse_safely("Thu Jan 22 15:50:22 UTC 2009")
+    published = Time.parse_safely "Thu Jan 22 15:50:22 UTC 2009"
+    expect(@entry.published).to eq published
   end
 
   it "should parse the categories" do
-    expect(@entry.categories).to eq ['Ruby', 'Another Category']
+    expect(@entry.categories).to eq ["Ruby", "Another Category"]
   end
 end

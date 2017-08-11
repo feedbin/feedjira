@@ -1,10 +1,11 @@
-source 'https://rubygems.org/'
+source "https://rubygems.org/"
 
 gemspec
 
-gem 'pry'
+gem "pry"
 
 group :test do
-  gem 'rake'
-  gem 'ox'
+  gem "oga"
+  gem "ox", platforms: [:mri, :rbx]
+  gem "rake"
 end

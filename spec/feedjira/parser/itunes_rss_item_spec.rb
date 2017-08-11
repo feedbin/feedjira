@@ -1,9 +1,10 @@
-require File.join(File.dirname(__FILE__), %w[.. .. spec_helper])
+require "spec_helper"
 
 describe Feedjira::Parser::ITunesRSSItem do
   before(:each) do
-    # I don't really like doing it this way because these unit test should only rely on ITunesRssItem,
-    # but this is actually how it should work. You would never just pass entry xml straight to the ITunesRssItem
+    # I don't really like doing it this way because these unit test should only
+    # rely on ITunesRssItem, but this is actually how it should work. You would
+    # never just pass entry xml straight to the ITunesRssItem
     @item = Feedjira::Parser::ITunesRSS.parse(sample_itunes_feed).entries.first
   end
 
@@ -20,7 +21,8 @@ describe Feedjira::Parser::ITunesRSSItem do
   end
 
   it "should parse the summary" do
-    expect(@item.itunes_summary).to eq "This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!"
+    summary = "This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!" # rubocop:disable Metrics/LineLength
+    expect(@item.itunes_summary).to eq summary
   end
 
   it "should parse the enclosure" do
@@ -34,7 +36,8 @@ describe Feedjira::Parser::ITunesRSSItem do
   end
 
   it "should parse the published date" do
-    expect(@item.published).to eq Time.parse_safely("Wed Jun 15 19:00:00 UTC 2005")
+    published = Time.parse_safely "Wed Jun 15 19:00:00 UTC 2005"
+    expect(@item.published).to eq published
   end
 
   it "should parse the duration" do
@@ -50,14 +53,15 @@ describe Feedjira::Parser::ITunesRSSItem do
   end
 
   it "should parse the order" do
-    expect(@item.itunes_order).to eq '12'
+    expect(@item.itunes_order).to eq "12"
   end
 
   it "should parse the closed captioned flag" do
-    expect(@item.itunes_closed_captioned).to eq 'yes'
+    expect(@item.itunes_closed_captioned).to eq "yes"
   end
 
   it "should parse the encoded content" do
-    expect(@item.content).to eq "<p><strong>TOPIC</strong>: Gooseneck Options</p>"
+    content = "<p><strong>TOPIC</strong>: Gooseneck Options</p>"
+    expect(@item.content).to eq content
   end
 end

@@ -1,6 +1,7 @@
 require "time"
 require "date"
 
+# rubocop:disable Style/DocumentationMethod
 class Time
   # Parse a time string and convert it to UTC without raising errors.
   # Parses a flattened 14-digit time (YYYYmmddHHMMMSS) as UTC.
@@ -10,22 +11,28 @@ class Time
   #
   # === Returns
   # A Time instance in UTC or nil if there were errors while parsing.
+  # rubocop:disable Metrics/MethodLength
   def self.parse_safely(dt)
-    if dt
-      case
-      when dt.is_a?(Time)
-        dt.utc
-      when dt.respond_to?(:empty?) && dt.empty?
-        nil
-      when dt.respond_to?(:to_datetime)
-        dt.to_datetime.utc
-      when dt.to_s =~ /\A\d{14}\z/
-        parse("#{dt.to_s}Z", true)
-      else
-        parse(dt.to_s, true).utc
-      end
+    if dt.is_a?(Time)
+      dt.utc
+    elsif dt.respond_to?(:to_datetime)
+      dt.to_datetime.utc
+    elsif dt.respond_to? :to_s
+      parse_string_safely dt.to_s
     end
-  rescue StandardError
+  rescue StandardError => e
+    Feedjira.logger.debug { "Failed to parse time #{dt}" }
+    Feedjira.logger.debug(e)
     nil
-  end unless method_defined?(:parse_safely)
+  end
+
+  def self.parse_string_safely(string)
+    return nil if string.empty?
+
+    if string =~ /\A\d{14}\z/
+      parse("#{string}Z", true)
+    else
+      parse(string).utc
+    end
+  end
 end
