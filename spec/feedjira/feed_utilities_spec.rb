@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require "spec_helper"
 
 describe Feedjira::FeedUtilities do
   before(:each) do
@@ -20,9 +20,26 @@ describe Feedjira::FeedUtilities do
     context "when the flag is set" do
       it "calls the preprocessing method" do
         @klass.preprocess_xml = true
-        expect(@klass).to receive(:preprocess).
-          and_return sample_rss_feed
+        expect(@klass).to receive(:preprocess).and_return sample_rss_feed
         @klass.parse sample_rss_feed
+      end
+    end
+  end
+
+  describe "strip whitespace" do
+    context "strip_whitespace config is true" do
+      it "strips all XML whitespace" do
+        Feedjira.configure { |config| config.strip_whitespace = true }
+
+        expect(@klass.strip_whitespace("\nfoobar\n")).to eq("foobar")
+
+        Feedjira.configure { |config| config.strip_whitespace = false }
+      end
+    end
+
+    context "strip_whitespace config is false" do
+      it "lstrips XML whitespace" do
+        expect(@klass.strip_whitespace("\nfoobar\n")).to eq("foobar\n")
       end
     end
   end
@@ -56,21 +73,21 @@ describe Feedjira::FeedUtilities do
       expect(feed.last_modified.class).to eq Time
     end
 
-    it "should return new_entries? as true when entries are put into new_entries" do
+    it "should return new_entries? as true when entries are put into new_entries" do # rubocop:disable Metrics/LineLength
       feed = @klass.new
       feed.new_entries << :foo
-      expect(feed).to have_new_entries
+      expect(feed.new_entries?).to eq true
     end
 
-    it "should return a last_modified value from the entry with the most recent published date if the last_modified date hasn't been set" do
+    it "should return a last_modified value from the entry with the most recent published date if the last_modified date hasn't been set" do # rubocop:disable Metrics/LineLength
       feed = Feedjira::Parser::Atom.new
-      entry =Feedjira::Parser::AtomEntry.new
+      entry = Feedjira::Parser::AtomEntry.new
       entry.published = Time.now.to_s
       feed.entries << entry
       expect(feed.last_modified).to eq entry.published
     end
 
-    it "should not throw an error if one of the entries has published date of nil" do
+    it "should not throw an error if one of the entries has published date of nil" do # rubocop:disable Metrics/LineLength
       feed = Feedjira::Parser::Atom.new
       entry = Feedjira::Parser::AtomEntry.new
       entry.published = Time.now.to_s
@@ -83,8 +100,9 @@ describe Feedjira::FeedUtilities do
   describe "#update_from_feed" do
     describe "updating feed attributes" do
       before(:each) do
-        # I'm using the Atom class when I know I should be using a different one. However, this update_from_feed
-        # method would only be called against a feed item.
+        # I'm using the Atom class when I know I should be using a different
+        # one. However, this update_from_feed method would only be called
+        # against a feed item.
         @feed = Feedjira::Parser::Atom.new
         @feed.title    = "A title"
         @feed.url      = "http://pauldix.net"
@@ -131,8 +149,9 @@ describe Feedjira::FeedUtilities do
 
     describe "updating entries" do
       before(:each) do
-        # I'm using the Atom class when I know I should be using a different one. However, this update_from_feed
-        # method would only be called against a feed item.
+        # I'm using the Atom class when I know I should be using a different
+        # one. However, this update_from_feed method would only be called
+        # against a feed item.
         @feed = Feedjira::Parser::Atom.new
         @feed.title    = "A title"
         @feed.url      = "http://pauldix.net"
@@ -170,12 +189,13 @@ describe Feedjira::FeedUtilities do
     end
 
     describe "#update_from_feed" do
-      let(:recent_entry_id) { 'entry_id' }
+      let(:recent_entry_id) { "entry_id" }
       let(:old_entry_id) { nil }
 
       before(:each) do
-        # I'm using the Atom class when I know I should be using a different one. However, this update_from_feed
-        # method would only be called against a feed item.
+        # I'm using the Atom class when I know I should be using a different
+        # one. However, this update_from_feed method would only be called
+        # against a feed item.
         @feed = Feedjira::Parser::Atom.new
         @feed.title    = "A title"
         @feed.url      = "http://pauldix.net"
@@ -228,42 +248,42 @@ describe Feedjira::FeedUtilities do
       end
     end
 
-    describe 'updating with a feed' do
-      let(:id_one) { '1' }
-      let(:id_two) { '2' }
+    describe "updating with a feed" do
+      let(:id_one) { "1" }
+      let(:id_two) { "2" }
 
-      let(:url_one) { 'http://example.com/post_one.html' }
-      let(:url_two) { 'http://example.com/post_two.html' }
+      let(:url_one) { "http://example.com/post_one.html" }
+      let(:url_two) { "http://example.com/post_two.html" }
 
-      let(:entry_one) { double 'Entry One', entry_id: id_one, url: url_one }
-      let(:entry_two) { double 'Entry Two', entry_id: id_two, url: url_two }
+      let(:entry_one) { double "Entry One", entry_id: id_one, url: url_one }
+      let(:entry_two) { double "Entry Two", entry_id: id_two, url: url_two }
 
       let(:feed_one) { Feedjira::Parser::Atom.new }
-      let(:feed_two) { double 'Feed Two', entries: [entry_two] }
+      let(:feed_two) { double "Feed Two", entries: [entry_two] }
 
       before do
         stub_const("Feedjira::FeedUtilities::UPDATABLE_ATTRIBUTES", [])
         feed_one.entries << entry_one
       end
 
-      it 'finds entries with unique ids and urls' do
+      it "finds entries with unique ids and urls" do
         feed_one.update_from_feed feed_two
         expect(feed_one.new_entries).to eq [entry_two]
       end
 
-      context 'when the entries have the same id' do
+      context "when the entries have the same id" do
         let(:id_two) { id_one }
 
-        it 'does not find a new entry' do
+        it "does not find a new entry" do
           feed_one.update_from_feed feed_two
           expect(feed_one.new_entries).to eq []
         end
       end
 
-      context 'when the entries have the same url' do
+      context "when the entries have the same url" do
         let(:url_two) { url_one }
 
-        it 'does not find a new entry' do
+        it "does not find a new entry" do
           feed_one.update_from_feed feed_two
           expect(feed_one.new_entries).to eq []
         end

@@ -1,30 +1,20 @@
 module Feedjira
   module Parser
-    # Parser for dealing with Atom feeds.
+    # Parser for dealing with RSS feeds.
     class AtomYoutube
       include SAXMachine
       include FeedUtilities
       element :title
-      element :subtitle, :as => :description
-      element :link, :as => :url, :value => :href, :with => {:type => "text/html"}
-      element :link, :as => :feed_url, :value => :href, :with => {:rel => "self"}
-      element :link, :as => :self_url, :value => :href, :with => {:rel => "self"}
-      elements :link, :as => :links, :value => :href
-      elements :link, :as => :hubs, :value => :href, :with => {:rel => "hub"}
-      elements :entry, :as => :entries, :class => AtomYoutubeEntry
+      element :link, as: :url, value: :href, with: { rel: "alternate" }
+      element :link, as: :feed_url, value: :href, with: { rel: "self" }
+      element :name, as: :author
+      element :"yt:channelId", as: :youtube_channel_id
+
+      elements :entry, as: :entries, class: AtomYoutubeEntry
 
       def self.able_to_parse?(xml) #:nodoc:
-        /\<feed[^\>]+xmlns:yt\s?=\s?[\"|\'](http:\/\/www\.youtube.com\/xml\/schemas\/2015)[\"|\'][^\>]*\>/ =~ xml
+        %r{xmlns:yt="http://www.youtube.com/xml/schemas/2015"} =~ xml
       end
-
-      def url
-        @url || (links - [feed_url]).last || links.last
-      end
-
-      def feed_url
-        @feed_url ||= links.first
-      end
-
     end
   end
 end

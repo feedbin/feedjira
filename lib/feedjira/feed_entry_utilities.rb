@@ -1,23 +1,23 @@
 module Feedjira
   module FeedEntryUtilities
-
     include Enumerable
+    include DateTimeUtilities
 
     def published
       @published ||= @updated
     end
 
     def parse_datetime(string)
-      begin
-        DateTime.parse(string).feed_utils_to_gm_time
-      rescue
-        warn "Failed to parse date #{string.inspect}"
-        nil
-      end
+      DateTime.parse(string).feed_utils_to_gm_time
+    rescue StandardError => e
+      Feedjira.logger.warn { "Failed to parse date #{string.inspect}" }
+      Feedjira.logger.warn(e)
+      nil
     end
 
     ##
-    # Returns the id of the entry or its url if not id is present, as some formats don't support it
+    # Returns the id of the entry or its url if not id is present, as some
+    # formats don't support it
     def id
       @entry_id ||= @url
     end
@@ -26,41 +26,40 @@ module Feedjira
     # Writer for published. By default, we keep the "oldest" publish time found.
     def published=(val)
       parsed = parse_datetime(val)
-      @published = parsed if !@published || parsed < @published
+      @published = parsed if parsed && (!@published || parsed < @published)
     end
 
     ##
     # Writer for updated. By default, we keep the most recent update time found.
     def updated=(val)
       parsed = parse_datetime(val)
-      @updated = parsed if !@updated || parsed > @updated
+      @updated = parsed if parsed && (!@updated || parsed > @updated)
     end
 
     def sanitize!
-      %w[title author summary content image].each do |name|
-        if self.respond_to?(name) && self.send(name).respond_to?(:sanitize!)
-          self.send(name).send :sanitize!
+      %w(title author summary content image).each do |name|
+        if respond_to?(name) && send(name).respond_to?(:sanitize!)
+          send(name).send :sanitize!
         end
       end
     end
 
-    alias_method :last_modified, :published
+    alias last_modified published
 
     def each
-      @rss_fields ||= self.instance_variables
+      @rss_fields ||= instance_variables
 
       @rss_fields.each do |field|
-        yield(field.to_s.sub('@', ''), self.instance_variable_get(field))
+        yield(field.to_s.sub("@", ""), instance_variable_get(field))
       end
     end
 
     def [](field)
-      self.instance_variable_get("@#{field.to_s}")
+      instance_variable_get("@#{field}")
     end
 
     def []=(field, value)
-      self.instance_variable_set("@#{field.to_s}", value)
+      instance_variable_set("@#{field}", value)
     end
-
   end
 end

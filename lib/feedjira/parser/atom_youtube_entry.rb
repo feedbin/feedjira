@@ -1,42 +1,30 @@
 module Feedjira
-
   module Parser
-    # Parser for dealing with Atom feed entries.
     class AtomYoutubeEntry
       include SAXMachine
       include FeedEntryUtilities
 
       element :title
-      element :link, :as => :url, :value => :href, :with => {:type => "text/html", :rel => "alternate"}
-      element :name, :as => :author
-      element :content
+      element :link, as: :url, value: :href, with: { rel: "alternate" }
+      element :name, as: :author
+      element :"media:description", as: :content
       element :summary
-
-      element :enclosure, :as => :image, :value => :href
-
       element :published
-      element :id, :as => :entry_id
-      element :created, :as => :published
-      element :issued, :as => :published
+      element :id, as: :entry_id
       element :updated
-      element :modified, :as => :updated
-      elements :category, :as => :categories, :value => :term
-      elements :link, :as => :links, :value => :href
-
-      element :"yt:videoId", :as => :youtube_video_id
-      element :"media:description", :as => :media_description
-      element :"media:content", :as => :media_width, :value => :width do |width|
-        width.to_i
-      end
-      element :"media:content", :as => :media_height, :value => :height do |height|
-        height.to_i
-      end
-
-      def url
-        @url ||= links.first
-      end
+      element :"yt:videoId", as: :youtube_video_id
+      element :"yt:channelId", as: :youtube_channel_id
+      element :"media:title", as: :media_title
+      element :"media:content", as: :media_url, value: :url
+      element :"media:content", as: :media_type, value: :type
+      element :"media:content", as: :media_width, value: :width
+      element :"media:content", as: :media_height, value: :height
+      element :"media:thumbnail", as: :media_thumbnail_url, value: :url
+      element :"media:thumbnail", as: :media_thumbnail_width, value: :width
+      element :"media:thumbnail", as: :media_thumbnail_height, value: :height
+      element :"media:starRating", as: :media_star_count, value: :count
+      element :"media:starRating", as: :media_star_average, value: :average
+      element :"media:statistics", as: :media_views, value: :views
     end
-
   end
-
 end

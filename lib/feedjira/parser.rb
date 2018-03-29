@@ -1,1 +1,4 @@
-module Feedjira::Parser; end
+module Feedjira
+  module Parser
+  end
+end

@@ -1,5 +1,38 @@
 # Feedjira Changelog
 
+## 3.0.0
+
+* Breaking Changes
+  * `Feedjira::Feed.parse` has moved to `Feedjira.parse`
+  * `Feedjira::Feed.fetch_and_parse` has been removed. See README examples for
+      how to request XML and parse.
+* General
+  * Drop support for Ruby 2.1
+
+## 2.1.1
+
+configurable logging and parsing
+
+## 2.1.0
+
+* Enhancements
+  * AtomYoutube is now a supported parser [#337][] (@jfiorato)
+  * Oga parsing is now supported [#331][] (@krasnoukhov)
+  * DateTime Handler now supports localized dates [#313][] (@PascalTurbo)
+  * RSS now supports language attribute [#344][] (@PascalTurbo)
+  * ITunesRSS added support for:
+    * `ttl` and `last_built` [#343][] (@sferik)
+    * `itunes_category` and `itunes_category_paths` [#329][] (@knu)
+    * `itunes_complete` [#328][] (@knu)
+    * single quoted attributes [#326][] (@sferik)
+    * Add image attribute [#349][] (@sferik)
+
+## 2.0.0
+
+* General
+  * Replaced curb with faraday
+  * Removed update functionality
+
 ## 1.6.0
 
 * Enhancements

@@ -1,12 +1,17 @@
-require 'rspec/core/rake_task'
+require "rspec/core/rake_task"
+require "rubocop/rake_task"
+require "yard"
 
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.verbose = false
 end
 
-desc "Open an irb session preloaded with this library"
-task :console do
-  sh "irb -rubygems -r ./lib/feedjira"
+RuboCop::RakeTask.new(:rubocop) do |t|
+  t.options = ["--display-cop-names"]
 end
 
-task default: :spec
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ["lib/**/*.rb", "-", "LICENSE"]
+end
+
+task default: [:spec, :rubocop]
