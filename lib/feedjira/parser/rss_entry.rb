@@ -7,9 +7,6 @@ module Feedjira
 
       element :title
       element :link, as: :url
-      element :guid, :as => :url, with: {
-        "isPermaLink" => "true"
-      }
 
       element :"dc:creator", as: :author
       element :author, as: :author
