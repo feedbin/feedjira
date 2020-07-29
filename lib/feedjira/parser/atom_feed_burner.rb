@@ -8,15 +8,19 @@ module Feedjira
 
       element :title
       element :subtitle, as: :description
-      element :link, as: :url_text_html, value: :href, with: { type: "text/html" }
-      element :link, as: :url_notype, value: :href, with: { type: nil, rel: nil }
-      element :link, as: :feed_url_link, value: :href, with: { type: "application/atom+xml" }
-      element :"atom10:link", as: :feed_url_atom10_link, value: :href, with: { type: "application/atom+xml" }
-      elements :"atom10:link", as: :hubs, value: :href, with: { rel: "hub" }
-      elements :entry, as: :entries, class: AtomFeedBurnerEntry
 
-      element :link, as: :self_url, value: :href, with: {rel: "self"}
+      element :link,          as: :url_text_html,        value: :href, with: { type: "text/html" }
+      element :link,          as: :url_notype,           value: :href, with: { type: nil, rel: nil }
+      element :link,          as: :feed_url_link,        value: :href, with: { type: "application/atom+xml" }
+      element :"atom10:link", as: :feed_url_atom10_link, value: :href, with: { type: "application/atom+xml" }
+
+      element :link,          as: :self_url, value: :href, with: {rel: "self"}
       element :"atom10:link", as: :self_url, value: :href, with: {rel: "self"}
+
+      elements :link,          as: :hubs, value: :href, with: { rel: "hub" }
+      elements :"atom10:link", as: :hubs, value: :href, with: { rel: "hub" }
+
+      elements :entry,         as: :entries, class: AtomFeedBurnerEntry
 
       attr_writer :url, :feed_url
 
