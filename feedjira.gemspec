@@ -28,4 +28,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rubocop", "0.46"
   s.add_development_dependency "vcr"
   s.add_development_dependency "yard", "~> 0.9"
+  s.add_development_dependency "http"
 end
