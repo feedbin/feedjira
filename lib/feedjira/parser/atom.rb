@@ -9,8 +9,7 @@ module Feedjira
       element :title
       element :subtitle, as: :description
       element :link, as: :url, value: :href, with: { type: "text/html" }
-      element :link, as: :feed_url, value: :href, with: { rel: "self" }
-      element :link, as: :self_url, value: :href, with: {rel: "self"}
+      element :link, as: :feed_url, value: :href, with: {rel: "self"}
       elements :link, as: :hubs, value: :href, with: { rel: "hub" }
       elements :link, as: :links, value: :href
       elements :entry, as: :entries, class: AtomEntry
@@ -25,6 +24,10 @@ module Feedjira
 
       def feed_url
         @feed_url ||= links.first
+      end
+
+      def self_url
+        @feed_url
       end
 
       def self.preprocess(xml)
