@@ -26,8 +26,12 @@ module Feedjira
       element :issued, as: :published
       elements :category, as: :categories
 
-      element :"dc:identifier", as: :entry_id
-      element :guid, as: :entry_id
+      element :"dc:identifier", as: :dc_identifier
+      element :guid
+
+      def entry_id
+        @guid || @dc_identifier
+      end
     end
   end
 end
