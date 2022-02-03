@@ -6,6 +6,8 @@ module Feedjira
     class RSS
       include SAXMachine
       include FeedUtilities
+      include ItunesFeedUtilities
+
       element :description
       element :image, class: RSSImage
       element :language

@@ -5,6 +5,7 @@ module Feedjira
     class ITunesRSSItem
       include SAXMachine
       include FeedEntryUtilities
+      include ItunesEntryUtilities
 
       element :author
       element :guid, as: :entry_id
@@ -13,33 +14,7 @@ module Feedjira
       element :description, as: :summary
       element :"content:encoded", as: :content
       element :pubDate, as: :published
-
-      # If author is not present use author tag on the item
       element :"dc:creator", as: :author
-      element :"itunes:author", as: :itunes_author
-      element :"itunes:block", as: :itunes_block
-      element :"itunes:duration", as: :itunes_duration
-      element :"itunes:explicit", as: :itunes_explicit
-      element :"itunes:keywords", as: :itunes_keywords
-      element :"itunes:subtitle", as: :itunes_subtitle
-      element :"itunes:image", value: :href, as: :itunes_image
-      element :"itunes:isClosedCaptioned", as: :itunes_closed_captioned
-      element :"itunes:order", as: :itunes_order
-
-      # If summary is not present, use the description tag
-      element :"itunes:summary", as: :itunes_summary
-      element :enclosure, value: :length, as: :enclosure_length
-      element :enclosure, value: :type, as: :enclosure_type
-      element :enclosure, value: :url, as: :enclosure_url
-      elements "psc:chapter", as: :raw_chapters, class: Feedjira::Parser::PodloveChapter # rubocop:disable Metrics/LineLength
-
-      # Podlove requires clients to re-order by start time in the
-      # event the publisher doesn't provide them in that
-      # order. SAXMachine doesn't have any sort capability afaik, so
-      # we have to sort chapters manually.
-      def chapters
-        raw_chapters.sort_by(&:start)
-      end
     end
   end
 end

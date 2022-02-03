@@ -9,6 +9,7 @@ module Feedjira
     class ITunesRSS
       include SAXMachine
       include FeedUtilities
+      include ItunesFeedUtilities
 
       attr_accessor :feed_url
 
@@ -25,41 +26,6 @@ module Feedjira
       element :ttl
       elements :"atom:link", as: :hubs, value: :href, with: {rel: "hub"}
       element :"atom:link", as: :self_url, value: :href, with: {rel: "self"}
-
-      # If author is not present use managingEditor on the channel
-      element :"itunes:author", as: :itunes_author
-      element :"itunes:block", as: :itunes_block
-      element :"itunes:image", value: :href, as: :itunes_image
-      element :"itunes:explicit", as: :itunes_explicit
-      element :"itunes:complete", as: :itunes_complete
-      element :"itunes:keywords", as: :itunes_keywords
-
-      # New URL for the podcast feed
-      element :"itunes:new_feed_url", as: :itunes_new_feed_url
-      element :"itunes:subtitle", as: :itunes_subtitle
-
-      # If summary is not present, use the description tag
-      element :"itunes:summary", as: :itunes_summary
-
-      # iTunes RSS feeds can have multiple main categories and multiple
-      # sub-categories per category.
-      elements :"itunes:category", as: :_itunes_categories,
-                                   class: ITunesRSSCategory
-      private :_itunes_categories
-
-      def itunes_categories
-        _itunes_categories.flat_map do |itunes_category|
-          itunes_category.enum_for(:each_subcategory).to_a
-        end
-      end
-
-      def itunes_category_paths
-        _itunes_categories.flat_map do |itunes_category|
-          itunes_category.enum_for(:each_path).to_a
-        end
-      end
-
-      elements :"itunes:owner", as: :itunes_owners, class: ITunesRSSOwner
       elements :item, as: :entries, class: ITunesRSSItem
 
       def self.able_to_parse?(xml)
