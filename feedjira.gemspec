@@ -17,8 +17,6 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = ">=1.9.3"
 
-  s.add_dependency "faraday",            ">= 0.9"
-  s.add_dependency "faraday_middleware", ">= 0.9"
   s.add_dependency "loofah",             ">= 2.0"
   s.add_dependency "sax-machine",        ">= 1.0"
 
