@@ -17,7 +17,6 @@ module Feedjira
       element :"content:encoded", as: :content
       element :description, as: :summary
 
-      element :"media:content", as: :image, value: :url
       element :enclosure, as: :image, value: :url
 
       element :pubDate, as: :published
@@ -31,6 +30,7 @@ module Feedjira
       elements :category, as: :categories
 
       element :guid, as: :entry_id
+      elements :"media:content", as: :media, class: EntryMedia
 
       def url
         @url || @link

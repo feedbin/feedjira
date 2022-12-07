@@ -14,7 +14,6 @@ module Feedjira
       element :"content:encoded", as: :content
       element :description, as: :summary
 
-      element :"media:content", as: :image, value: :url
       element :enclosure, as: :image, value: :url
 
       element :pubDate, as: :published
@@ -29,6 +28,7 @@ module Feedjira
 
       element :"dc:identifier", as: :dc_identifier
       element :guid
+      elements :"media:content", as: :media, class: EntryMedia
 
       def entry_id
         @guid || @dc_identifier

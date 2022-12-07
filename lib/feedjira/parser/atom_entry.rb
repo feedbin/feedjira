@@ -12,7 +12,6 @@ module Feedjira
       element :content
       element :summary
 
-      element :"media:content", as: :image, value: :url
       element :enclosure, as: :image, value: :href
 
       element :published
@@ -23,6 +22,7 @@ module Feedjira
       element :modified, as: :updated
       elements :category, as: :categories, value: :term
       elements :link, as: :links, value: :href
+      elements :"media:content", as: :media, class: EntryMedia
 
       def url
         @url ||= links.first
