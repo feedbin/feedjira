@@ -26,6 +26,7 @@ module Feedjira
       element :issued, as: :published
       elements :category, as: :categories
 
+      element :post_id
       element :"dc:identifier", as: :dc_identifier
       element :guid
       elements :"media:content", as: :media, class: EntryMedia
