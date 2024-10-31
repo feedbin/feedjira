@@ -14,6 +14,7 @@ module Feedjira
       element :id, as: :entry_id
       element :updated
       element :"yt:videoId", as: :youtube_video_id
+      element :"yt:channelId", as: :youtube_channel_id
       elements :"media:content", as: :media, class: EntryMedia
     end
   end
