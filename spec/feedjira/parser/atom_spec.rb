@@ -65,6 +65,12 @@ module Feedjira::Parser
     it "should parse entries" do
       expect(@feed.entries.size).to eq 10
     end
+
+    it "should get the correct homepage" do
+      xml = load_sample "2ality.xml"
+      feed = Atom.parse xml
+      expect(feed.url).to eq "https://2ality.com/"
+    end
   end
 
   describe "preprocessing" do

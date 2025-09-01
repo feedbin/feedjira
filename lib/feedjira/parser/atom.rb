@@ -6,28 +6,31 @@ module Feedjira
       include SAXMachine
       include FeedUtilities
 
+      attr_writer :url, :feed_url, :hubs
+
       element :title
       element :subtitle, as: :description
-      element :link, as: :url, value: :href, with: { type: "text/html" }
-      element :link, as: :feed_url, value: :href, with: {rel: "self"}
-      elements :link, as: :hubs, value: :href, with: { rel: "hub" }
-      elements :link, as: :links, value: :href
+      elements :link, as: :links, class: AtomLink
       elements :entry, as: :entries, class: AtomEntry
 
       def self.able_to_parse?(xml)
         %r{\<feed[^\>]+xmlns\s?=\s?[\"\'](http://www\.w3\.org/2005/Atom|http://purl\.org/atom/ns\#)[\"\'][^\>]*\>} =~ xml # rubocop:disable Metrics/LineLength
       end
 
-      def url
-        @url || (links - [feed_url]).last || links.last
+      def feed_url
+        (links.find { it.rel == "self" })&.href || links.first&.href
       end
 
-      def feed_url
-        @feed_url ||= links.first
+      def url
+        (links.find { it.type == "text/html" || it.rel == "alternate" })&.href || links.last&.href
+      end
+
+      def hubs
+        links.filter_map { it.rel == "hub" && it.href }
       end
 
       def self_url
-        @feed_url
+        feed_url
       end
 
       def self.preprocess(xml)

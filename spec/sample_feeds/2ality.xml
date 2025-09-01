@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title type="html">2ality â€“ JavaScript and more</title>
+<link href="https://2ality.com/"/>
+<link rel="self" href="https://2ality.com/feeds/posts.atom"/>
+<link rel="first" href="https://2ality.com/feeds/posts.atom"/>
+<link rel="last" href="https://2ality.com/feeds/posts-2005.atom"/>
+<link rel="next" href="https://2ality.com/feeds/posts-2024.atom"/>
+<updated>2025-08-20T00:00:00.000Z</updated>
+<author>
+  <name>Dr. Axel Rauschmayer</name>
+</author>
+<id>https://2ality.com/</id><entry>
+  <title type="html">Learning web development: Booleans, comparisons and &lt;code&gt;if&lt;/code&gt; statements</title>
+  <link href="https://2ality.com/2025/08/javascript-booleans-comparisons-if.html"/>
+  <id>https://2ality.com/2025/08/javascript-booleans-comparisons-if.html</id>
+  <updated>2025-08-20T00:00:00.000Z</updated>
+  <summary type="html">&lt;p&gt;In this chapter, we learn about tools for only running a piece of code if a condition is met: truth values (booleans), comparisons and &lt;code&gt;if&lt;/code&gt; statements.&lt;/p&gt;
+</summary>
+</entry>
+</feed>
