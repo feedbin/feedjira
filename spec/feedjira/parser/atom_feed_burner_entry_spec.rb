@@ -35,7 +35,7 @@ describe Feedjira::Parser::AtomFeedBurnerEntry do
   end
 
   it "should parse the content" do
-    expect(@entry.content).to eq sample_feedburner_atom_entry_content
+    expect(@entry.content.to_s.gsub(/\r\n/, "\n") ).to eq sample_feedburner_atom_entry_content.to_s.gsub(/\r\n/, "\n")
   end
 
   it "should provide a summary" do

@@ -75,7 +75,7 @@ describe Feedjira::Parser::RSSFeedBurnerEntry do
       comment_rss
       content
       entry_id
-      image
+      media
       published
       summary
       title

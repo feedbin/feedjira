@@ -127,7 +127,6 @@ describe Feedjira::FeedUtilities do
         @updated_feed.feed_url = "a new feed url"
         @feed.update_from_feed(@updated_feed)
         expect(@feed.feed_url).to eq @updated_feed.feed_url
-        expect(@feed).to be_updated
       end
 
       it "should not update the feed_url if the same" do

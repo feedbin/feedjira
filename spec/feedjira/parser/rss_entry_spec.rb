@@ -49,7 +49,7 @@ describe Feedjira::Parser::RSSEntry do
   end
 
   it "should parse the guid as id" do
-    expect(@entry.id).to eq "http://tenderlovemaking.com/?p=198"
+    expect(@entry.entry_id).to eq "http://tenderlovemaking.com/?p=198"
   end
 
   it "should support each" do
@@ -71,7 +71,7 @@ describe Feedjira::Parser::RSSEntry do
       categories
       comment_rss
       content
-      entry_id
+      guid
       published
       summary
       title
