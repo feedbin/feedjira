@@ -38,24 +38,25 @@ module Feedjira
         elements :"media:content", as: :media, class: Feedjira::Parser::EntryMedia
         elements :category,        as: :categories
 
-        element :"itunes:author", as: :itunes_author
-        element :"itunes:block", as: :itunes_block
-        element :"itunes:duration", as: :itunes_duration
-        element :"itunes:explicit", as: :itunes_explicit
-        element :"itunes:keywords", as: :itunes_keywords
-        element :"itunes:subtitle", as: :itunes_subtitle
-        element :"itunes:image", value: :href, as: :itunes_image
+        element :enclosure,                  as: :enclosure_length, value: :length
+        element :enclosure,                  as: :enclosure_type, value: :type
+        element :enclosure,                  as: :enclosure_url, value: :url
+
+        element :"itunes:author",            as: :itunes_author
+        element :"itunes:block",             as: :itunes_block
+        element :"itunes:duration",          as: :itunes_duration
+        element :"itunes:explicit",          as: :itunes_explicit
+        element :"itunes:keywords",          as: :itunes_keywords
+        element :"itunes:subtitle",          as: :itunes_subtitle
+        element :"itunes:image",             as: :itunes_image, value: :href
         element :"itunes:isClosedCaptioned", as: :itunes_closed_captioned
-        element :"itunes:order", as: :itunes_order
-        element :"itunes:season", as: :itunes_season
-        element :"itunes:episode", as: :itunes_episode
-        element :"itunes:title", as: :itunes_title
-        element :"itunes:episodeType", as: :itunes_episode_type
-        element :"itunes:summary", as: :itunes_summary
-        element :enclosure, value: :length, as: :enclosure_length
-        element :enclosure, value: :type, as: :enclosure_type
-        element :enclosure, value: :url, as: :enclosure_url
-        elements "psc:chapter", as: :raw_chapters, class: Feedjira::Parser::PodloveChapter
+        element :"itunes:order",             as: :itunes_order
+        element :"itunes:season",            as: :itunes_season
+        element :"itunes:episode",           as: :itunes_episode
+        element :"itunes:title",             as: :itunes_title
+        element :"itunes:episodeType",       as: :itunes_episode_type
+        element :"itunes:summary",           as: :itunes_summary
+        elements :"psc:chapter",             as: :raw_chapters, class: Feedjira::Parser::PodloveChapter
       end
     end
 
