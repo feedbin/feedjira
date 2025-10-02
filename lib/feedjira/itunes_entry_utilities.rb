@@ -57,22 +57,22 @@ module Feedjira
         element :enclosure, value: :url, as: :enclosure_url
         elements "psc:chapter", as: :raw_chapters, class: Feedjira::Parser::PodloveChapter
       end
+    end
 
-      def entry_id
-        @entry_id&.guid
-      end
+    def entry_id
+      @entry_id&.guid
+    end
 
-      def url
-        @url || @entry_id&.url
-      end
+    def url
+      @url || @entry_id&.url
+    end
 
-      def id
-        entry_id || @dc_identifier || @url
-      end
+    def id
+      entry_id || @dc_identifier || @url
+    end
 
-      def chapters
-        raw_chapters.sort_by(&:start)
-      end
+    def chapters
+      raw_chapters.sort_by(&:start)
     end
   end
 end
