@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Feedjira
-  module ItunesEntryUtilities
+  module RSSEntryUtilities
     def self.included(mod)
       mod.class_exec do
         sax_config.top_level_elements["enclosure"].clear

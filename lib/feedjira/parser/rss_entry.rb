@@ -4,7 +4,7 @@ module Feedjira
     class RSSEntry
       include SAXMachine
       include FeedEntryUtilities
-      include ItunesEntryUtilities
+      include RSSEntryUtilities
     end
   end
 end

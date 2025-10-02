@@ -5,7 +5,7 @@ module Feedjira
     class RSSFeedBurnerEntry
       include SAXMachine
       include FeedEntryUtilities
-      include ItunesEntryUtilities
+      include RSSEntryUtilities
       element :"feedburner:origLink", as: :url
     end
   end
