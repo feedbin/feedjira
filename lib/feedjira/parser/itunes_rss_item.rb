@@ -6,15 +6,6 @@ module Feedjira
       include SAXMachine
       include FeedEntryUtilities
       include ItunesEntryUtilities
-
-      element :author
-      element :guid, as: :entry_id
-      element :title
-      element :link, as: :url
-      element :description, as: :summary
-      element :"content:encoded", as: :content
-      element :pubDate, as: :published
-      element :"dc:creator", as: :author
     end
   end
 end
