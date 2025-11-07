@@ -61,7 +61,7 @@ module Feedjira
     end
 
     def entry_id
-      @entry_id&.guid
+      @entry_id&.guid || @dc_identifier
     end
 
     def url
