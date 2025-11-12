@@ -115,4 +115,10 @@ describe Feedjira::Parser::RSSEntry do
     feed = Feedjira.parse(sample_rss_feed_permalinks)
     expect(feed.entries[3].url).to eq "http://example.com/4"
   end
+
+  it "should use dc:identifier as a fallback id" do
+    xml = load_sample "pinboard.xml"
+    feed = Feedjira.parse xml
+    expect(feed.entries.first.entry_id).to eq "https://pinboard.in/u:imbw267/b:33c4accfa45f/"
+  end
 end

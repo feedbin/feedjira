@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns="http://purl.org/rss/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:syn="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/">
+  <channel rdf:about="http://pinboard.in">
+    <title>Pinboard (popular bookmarks)</title>
+    <link>https://pinboard.in/popular/</link>
+    <description>popular items from Pinboard</description>
+    <items>
+      <rdf:li rdf:resource="https://willmorrison.net/posts/marble-fountain/"/>
+    </rdf:Seq>
+  </items>
+</channel>
+<item rdf:about="https://willmorrison.net/posts/marble-fountain/">
+  <title>Marble Fountain :: Will Morrison — Personal Blog</title>
+  <dc:date>2025-11-12T05:47:02+00:00</dc:date>
+  <link>https://willmorrison.net/posts/marble-fountain/</link>
+  <dc:creator>imbw267</dc:creator><description><![CDATA[<blockquote>I really enjoy procedural generation, especially systems designed to work with hardware outputs. After starting work at Formlabs in September of 2023 and gaining access to much nicer printers than I was used to, I started wanting to tackle some large algorithmic structure projects. Complexity is free in 3d printing, the limit of design geometry is mostly how much time you&rsquo;re willing to spend in CAD. I wanted to print the most complicated art piece I could think of.</blockquote>]]></description>
+  <dc:identifier>https://pinboard.in/u:imbw267/b:33c4accfa45f/</dc:identifier>
+</item>
+</rdf:RDF>
