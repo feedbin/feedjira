@@ -28,7 +28,8 @@ module SampleFeeds
     sample_youtube_atom_feed: "youtube_atom.xml",
     sample_atom_xhtml_with_escpaed_html_in_pre_tag_feed: "AtomEscapedHTMLInPreTag.xml",
     sample_json_feed: "json_feed.json",
-    sample_rss_feed_permalinks: "Permalinks.xml"
+    sample_rss_feed_permalinks: "Permalinks.xml",
+    sample_atom_planet_feed: "planet.xml"
   }.freeze
 
   FEEDS.each do |method, filename|
