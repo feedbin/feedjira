@@ -20,15 +20,19 @@ module Feedjira
     end
 
     def content_nodes
-      doc.search 'entry > content[type="xhtml"], entry > summary[type="xhtml"], entry > title[type="xhtml"]' # rubocop:disable Metrics/LineLength
+      doc.xpath(
+        "//*[local-name()='entry']" \
+        "/*[(local-name()='content' or local-name()='summary' or local-name()='title')" \
+        " and @type='xhtml']"
+      )
     end
 
     def raw_html(node)
-      node.search("./div").inner_html
+      node.xpath("./*[local-name()='div']").inner_html
     end
 
     def doc
-      @doc ||= Nokogiri::XML(@xml).remove_namespaces!
+      @doc ||= Nokogiri::XML(@xml)
     end
   end
 end

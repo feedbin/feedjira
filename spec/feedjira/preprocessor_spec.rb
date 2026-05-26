@@ -26,4 +26,22 @@ describe Feedjira::Preprocessor do
     expected_pre_tag = "        &lt;pre&gt;&amp;lt;b&amp;gt;test&amp;lt;b&amp;gt;&lt;/pre&gt;" # rubocop:disable Metrics/LineLength
     expect(escaped.split("\n")[7]).to eq(expected_pre_tag)
   end
+
+  it "preserves namespaced siblings of <content>" do
+    xml = <<~XML
+      <?xml version="1.0" encoding="utf-8"?>
+      <feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+        <entry>
+          <id>1</id>
+          <media:content url="https://example.com/img.jpg" medium="image" />
+          <content type="html">&lt;p&gt;hello&lt;/p&gt;</content>
+        </entry>
+      </feed>
+    XML
+
+    processed = Feedjira::Preprocessor.new(xml).to_xml
+    entry = Feedjira::Parser::Atom.parse(processed).entries.first
+
+    expect(entry.content).to eq("<p>hello</p>")
+  end
 end
